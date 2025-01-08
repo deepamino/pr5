@@ -310,5 +310,7 @@ En este caso, el átomo central se encuentra en la posición **551** de la lista
 
 El átomo central identificado es un **nitrógeno (`N`)** del residuo **prolina (`PRO`)** en la **cadena `A`** de la proteína. La prolina es un aminoácido que desempeña un papel especial en las estructuras proteicas debido a su geometría rígida, que puede influir en la flexibilidad y estabilidad de la proteína. 
 
+---
+
 
 </div>
