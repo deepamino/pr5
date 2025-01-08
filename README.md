@@ -1,5 +1,7 @@
 # Estructuras en tres dimensiones con Biopython
 
+<div align="justify">
+    
 Este documento presenta un conjunto de ejercicios prácticos centrados en la bioinformática estructural y en el uso de herramientas computacionales como Biopython para analizar y manipular datos biológicos, específicamente relacionados con estructuras de proteínas y secuencias.
 
 ---
@@ -47,7 +49,7 @@ structure = parser.get_structure(pdb_code, f"./files/{pdb_code}.pdb")
 
 El objeto `structure` contiene toda la información sobre la organización atómica y molecular de la proteína, permitiendo realizar análisis y cálculos adicionales, como los descritos posteriormente.
 
-### (a) Calcula la distancia entre los átomos O del primer y último residuo de la cadena A de la hemoglobina.
+### (a) Calcula la distancia entre los átomos O del primer y último residuo de la cadena A de la hemoglobina
 
 Para calcular la distancia entre los átomos de oxígeno (O) correspondientes al primer y último residuo de la cadena A, se siguen los pasos descritos a continuación:
 
@@ -91,7 +93,7 @@ Para calcular la distancia entre los átomos de oxígeno (O) correspondientes al
        <p><b>Figura 2.</b> Distancia entre los átomos O del primer y último residuo de la cadena A.</p>
    </div>
 
-### (b) Calcula el ángulo diedro entre los átomos N,CA,C, y O del primer residuo de la cadena A.
+### (b) Calcula el ángulo diedro entre los átomos N,CA,C, y O del primer residuo de la cadena A
 
 El ángulo diedro es un ángulo de torsión que describe la disposición espacial de cuatro átomos conectados de forma secuencial. Este tipo de ángulo está estrechamente relacionado con las conformaciones locales y las estructuras secundarias de las proteínas, como las hélices alfa y las hojas beta. 
 
@@ -122,11 +124,16 @@ El ángulo diedro es un ángulo de torsión que describe la disposición espacia
    angle = calc_dihedral(coord_N, coord_CA, coord_C, coord_O)
    angle_degrees = np.degrees(angle)
    ```
+   
+<div align="center">
+    <img src="results/ej_1_b.png" width="60%">
+    <p><b>Figura 3.</b> Ángulo diedro de los cuatro átomos.</p>
+</div>
 
 En este caso, el ángulo diedro calculado es de **-25.67º**. Este valor negativo indica que el ángulo de torsión está en el sentido contrario a las agujas del reloj cuando se observa desde el vector definido por los átomos N y CA hacia el vector definido por los átomos C y O.
 Un ángulo diedro de **-25.67º** sugiere una ligera torsión que podría estar asociada con la formación de estructuras secundarias específicas, aunque no es un valor característico de una hélice alfa ni una hoja beta, que suelen tener ángulos más definidos. Este resultado destaca la flexibilidad conformacional del residuo inicial en la cadena A de la hemoglobina, un aspecto importante para su función biológica y estabilidad estructural.
 
-### (c) Calcula el centro de masas de la estructura de la hemoglobina. 
+### (c) Calcula el centro de masas de la estructura de la hemoglobina
 
 El **centro de masas (center of mass)** de una estructura molecular se calcula como el promedio ponderado de las coordenadas de todos los átomos en la estructura, donde el peso de cada átomo es su masa. La fórmula es la siguiente:
 
@@ -179,13 +186,152 @@ Información de las masas atómicas: [Disponible aquí](https://www.lenntech.es/
    ```
 
 4. **Visualización del resultado**  
-   El centro de masas calculado se representa gráficamente para resaltar su posición en la estructura de la hemoglobina. En la **Figura 3**, se observa el centro de masas como un punto destacado en la estructura tridimensional:
+   El centro de masas calculado ($14.45, 2.01, 13.18$) se representa gráficamente para resaltar su posición en la estructura de la hemoglobina. En la **Figura 4**, se observa el centro de masas como un punto destacado en la estructura tridimensional:
 
    <div align="center">
        <img src="results/ej_1_c.png" width="60%">
-       <p><b>Figura 3.</b> Centro de masas de la hemoglobina representado como un punto destacado.</p>
+       <p><b>Figura 4.</b> Centro de masas de la hemoglobina representado como un punto destacado.</p>
    </div>
 
 En el caso de la hemoglobina, se encuentra cerca del núcleo de la estructura, lo cual es consistente con su configuración compacta y su función biológica de transporte de oxígeno en el organismo. Este análisis puede ser extendido a otras proteínas para evaluar la distribución de masa y su relación con propiedades estructurales y funcionales.
 
+---
 
+## **Ejercicio 2: Proteína lisozima del huevo de la gallina**
+
+En primer lugar, al igual que en el ejercicio 1, el archivo en formato PDB se descarga utilizando la función personalizada `download_pdb`, la cual obtiene el archivo a partir del identificador único de la proteína proporcionado por la base de datos PDB (Protein Data Bank).
+
+Posteriormente, se emplean dos herramientas para la visualización interactiva de estructuras tridimensionales de proteínas: la librería `nglview` y la librería `py3Dmol`. 
+
+<div align="center">
+    <img src="results/estructura_2.png" width="60%">
+    <p><b>Figura 5.</b> Representación tridimensional de la estructura de la lisozima.</p>
+</div>
+
+Finalmente, el archivo descargado se carga en Biopython para su análisis estructural. Esto se logra creando un objeto de tipo estructura mediante el módulo `PDBParser`. El objeto `structure` contiene toda la información sobre la organización atómica y molecular de la proteína, permitiendo realizar análisis y cálculos adicionales, como los descritos posteriormente.
+
+### (a) Número de átomos y nombres del primer y último átomo en la lista
+
+Este apartado tiene como objetivo determinar el número total de átomos presentes en la estructura de la lisozima y especificar el nombre del primer y último átomo en la lista de átomos de la estructura.
+
+1. **Obtención de la lista de átomos**  
+   Se genera una lista que contiene todos los átomos de la estructura utilizando el método `get_atoms`:
+
+   ```python
+   atoms = list(structure.get_atoms())
+   ```
+
+2. **Cálculo del número total de átomos**  
+   La longitud de la lista de átomos se determina mediante la función `len`, lo que proporciona el número total de átomos en la estructura:
+
+   ```python
+   num_atoms = len(atoms)
+   ```
+
+   En este caso, la proteína de la lisozima contiene **$1.102$ átomos**.
+
+3. **Obtención de los nombres del primer y último átomo**  
+   Se acceden al primer y último átomo en la lista mediante índices y se extraen sus nombres utilizando el método `get_name`:
+
+   ```python
+   first_atom = atoms[0].get_name()
+   last_atom = atoms[-1].get_name()
+   ```
+
+   En este caso:
+   - El **primer átomo** es un átomo de nitrógeno (`N`).
+   - El **último átomo** es un átomo de oxígeno (`O`).
+
+4. **Visualización de los resultados**  
+   La **Figura 6** muestra la estructura tridimensional de la lisozima, donde se destacan claramente el primer y el último átomo:
+
+   <div align="center">
+       <img src="results/ej_2_a.png" width="60%">
+       <p><b>Figura 6.</b> Primer y último átomo de la lisozima.</p>
+   </div>
+
+El análisis realizado confirma que la estructura de la lisozima contiene un total de **1,102 átomos**. El **primer átomo** identificado es un átomo de nitrógeno (`N`), y el **último átomo** es un átomo de oxígeno (`O`). 
+
+### (b) Cálculo del ángulo entre los tres primeros átomos de la lista
+
+El cálculo del ángulo entre tres átomos se basa en la geometría molecular y utiliza las posiciones de los átomos en el espacio tridimensional. El ángulo se obtiene a partir de los vectores de posición de los tres átomos, calculando el ángulo entre ellos utilizando funciones específicas de Biopython.
+
+1. **Obtención de los vectores de los tres primeros átomos**  
+   Se seleccionan los tres primeros átomos de la lista y se extraen sus vectores de posición tridimensionales ($x, y, z$)):
+
+   ```python
+   atom1, atom2, atom3 = atoms[0], atoms[1], atoms[2]
+   vector1 = atom1.get_vector()
+   vector2 = atom2.get_vector()
+   vector3 = atom3.get_vector()
+   ```
+
+2. **Cálculo del ángulo en radianes**  
+   Se utiliza la función `calc_angle` de Biopython, que calcula el ángulo formado por tres vectores en radianes:
+
+   ```python
+   angle = calc_angle(vector1, vector2, vector3)
+   ```
+
+3. **Conversión del ángulo a grados**  
+   El ángulo calculado en radianes se convierte a grados utilizando la función `math.degrees`:
+
+   ```python
+   angle_deg = math.degrees(angle)
+   ```
+
+   En este caso, el ángulo calculado es **118.36 grados**.
+
+4. **Visualización del ángulo**  
+   La **Figura 7** ilustra gráficamente la disposición de los tres primeros átomos y el ángulo calculado entre ellos:
+
+   <div align="center">
+       <img src="results/ej_2_b.png" width="60%">
+       <p><b>Figura 7.</b> Representación del ángulo entre los tres primeros átomos de la lisozima.</p>
+   </div>
+
+### (c) Identificación de la cadena y el residuo del átomo central de la lista
+
+Este apartado tiene como objetivo identificar el átomo que se encuentra en la posición central de la lista de átomos, así como su cadena y residuo correspondiente. Este análisis se basa en las estructuras de datos y clases proporcionadas por Biopython.
+
+1. **Obtención del índice y del átomo central**  
+   El índice del átomo central se calcula dividiendo el número total de átomos (\( \text{num_atoms} \)) entre dos, utilizando la división entera para garantizar un índice válido. A partir de este índice, se obtiene el átomo central:
+
+   ```python
+   middle_index = num_atoms // 2
+   middle_atom = atoms[middle_index]
+   ```
+
+2. **Obtención de la cadena y el residuo del átomo**  
+   Mediante la jerarquía de clases de Biopython, se obtienen los elementos relacionados con el átomo:
+   - **Residuo**: Se obtiene utilizando el método `get_parent` aplicado al átomo.
+   - **Cadena**: Se obtiene aplicando `get_parent` al residuo.
+   - **Información del residuo**: A partir del objeto residuo, se extraen el nombre del residuo (\( \text{get_resname} \)) y su número (\( \text{get_id}[1] \)).
+   - **ID de la cadena**: Se obtiene con el método `get_id` del objeto cadena.
+
+   ```python
+   residue = middle_atom.get_parent()
+   chain = residue.get_parent()
+   chain_id = chain.get_id()
+   residue_id = residue.get_id()
+   residue_name = residue.get_resname()
+   residue_number = residue_id[1]
+   ```
+
+3. **Resultados**  
+   En este caso, el átomo central se encuentra en la posición **551** de la lista de átomos. Este átomo es un **nitrógeno (`N`)** que pertenece:
+   - A la **cadena `A`** (única en la estructura).
+   - Al **residuo `PRO` (prolina)** con número **123**.
+
+4. **Visualización del átomo central**  
+   La **Figura 8** muestra gráficamente la ubicación del átomo central y su residuo correspondiente dentro de la estructura tridimensional:
+
+   <div align="center">
+       <img src="results/ej_2_c.png" width="60%">
+       <p><b>Figura 8.</b> Representación del átomo central y su residuo.</p>
+   </div>
+
+El átomo central identificado es un **nitrógeno (`N`)** del residuo **prolina (`PRO`)** en la **cadena `A`** de la proteína. La prolina es un aminoácido que desempeña un papel especial en las estructuras proteicas debido a su geometría rígida, que puede influir en la flexibilidad y estabilidad de la proteína. 
+
+
+</div>
