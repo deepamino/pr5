@@ -6,6 +6,8 @@ Este documento presenta un conjunto de ejercicios prácticos centrados en la bio
 
 ---
 
+<br>
+
 ## **Ejercicio 1: Proteína de la hemoglobina humana**
 
 En primer lugar, el archivo en formato PDB se descarga utilizando la función personalizada `download_pdb`, la cual obtiene el archivo a partir del identificador único de la proteína proporcionado por la base de datos PDB (Protein Data Bank). El código de la función se presenta a continuación:
@@ -185,6 +187,8 @@ En el caso de la hemoglobina, se encuentra cerca del núcleo de la estructura, l
 
 ---
 
+<br>
+
 ## **Ejercicio 2: Proteína lisozima del huevo de la gallina**
 
 En primer lugar, al igual que en el ejercicio 1, el archivo en formato PDB se descarga utilizando la función personalizada `download_pdb`, la cual obtiene el archivo a partir del identificador único de la proteína proporcionado por la base de datos PDB (Protein Data Bank).
@@ -312,5 +316,88 @@ El átomo central identificado es un **nitrógeno (`N`)** del residuo **prolina 
 
 ---
 
+<br>
+
+### README: Ejercicio 3 - Proteínas del Sueño
+
+#### Introducción
+En este ejercicio, se exploran las características estructurales, funcionales y evolutivas de dos proteínas clave implicadas en la regulación del sueño y otros procesos biológicos esenciales: **Orexina-A/Hipocretina-1 (1WSO)** y **Orexina-B/Hipocretina-2 (1CQ0)**. A través del análisis tridimensional, búsquedas de homólogos y la construcción de árboles filogenéticos, se busca entender las similitudes y diferencias entre estas proteínas, sus relaciones evolutivas y su papel en organismos como el ser humano.
+
+La Orexina-A y la Orexina-B son neuropéptidos producidos en el hipotálamo que desempeñan un papel crítico en la regulación del ciclo sueño-vigilia, el apetito y la homeostasis energética. Aunque comparten un precursor común, presentan diferencias notables en su estructura y funcionalidad. Este análisis aborda tanto las similitudes que permiten su funcionalidad compartida como las diferencias que explican sus afinidades específicas por distintos receptores.
+
+---
+
+### Visualización y Exploración de las Estructuras Tridimensionales
+Las proteínas 1WSO y 1CQ0 se cargaron utilizando la librería `Bio.PDB` y se visualizaron mediante herramientas como `nglview` y `py3Dmol`. Estas visualizaciones revelaron detalles importantes:
+
+1. **Estructura de 1WSO (Orexina-A):**
+   - La proteína muestra una hélice alfa prominente, con una organización compacta y una estructura secundaria bien definida. Esta hélice alfa es crucial para su interacción con los receptores OX1R y OX2R.
+   - Se identificaron residuos no estándar, como PCA y NH₂. Estos residuos, aunque pequeños, desempeñan un papel importante en la estabilización de la estructura o en su funcionalidad experimental.
+
+2. **Estructura de 1CQ0 (Orexina-B):**
+   - A diferencia de 1WSO, esta proteína es más compacta y tiene menos flexibilidad en sus extremos terminales, lo que refuerza su interacción específica con el receptor OX2R.
+   - La estructura presenta una única hélice alfa continua, que también es fundamental para sus funciones biológicas.
+
+Además, se identificaron y describieron ligandos presentes en las estructuras, con un análisis detallado de su rol en la funcionalidad y estabilidad de las proteínas.
+
+---
+
+### Alineación de Proteínas
+El alineamiento estructural se llevó a cabo utilizando el algoritmo de superposición de Kabsch implementado en la clase `PDB.Superimposer` de Biopython. Este proceso minimiza la suma de las distancias cuadradas entre átomos equivalentes en ambas proteínas, generando tres componentes clave:
+
+1. **Matriz de Rotación**:
+   $$
+   R = 
+   \\begin{bmatrix}
+   1.00000000 & -1.31074131 \\times 10^{-8} &  9.74082657 \\times 10^{-8} \\\\
+   1.31074154 \\times 10^{-8} & 1.00000000 & -2.44023484 \\times 10^{-8} \\\\
+   -9.74082652 \\times 10^{-8} & 2.44023494 \\times 10^{-8} & 1.00000000
+   \\end{bmatrix}
+   $$
+   Esta matriz muestra que no fue necesario un cambio significativo en la orientación de las proteínas para lograr la alineación, ya que los valores cercanos a 1 en la diagonal indican una conservación espacial notable.
+
+2. **Vector de Traslación**:
+   $$
+   T = 
+   \\begin{bmatrix}
+   -1.10392905 \\times 10^{-6} \\\\
+   1.58119236 \\times 10^{-7} \\\\
+   -7.35061366 \\times 10^{-7}
+   \\end{bmatrix}
+   $$
+   Este vector describe el desplazamiento mínimo necesario para alinear las estructuras en un mismo sistema de coordenadas. Los valores muy pequeños indican que las proteínas ya estaban alineadas de manera aproximada antes del ajuste.
+
+3. **RMSD (Root Mean Square Deviation)**:
+   $$
+   \\text{RMSD} = \\sqrt{\\frac{1}{N} \\sum_{i=1}^N \\left\\| P_{1i} - P_{2i} \\right\\|^2} = 7.47 \\, \\text{Å}
+   $$
+   Este valor refleja diferencias estructurales significativas, particularmente en las regiones terminales y flexibles de las proteínas.
+
+La visualización de las proteínas alineadas mostró una conservación en las hélices alfa principales y diferencias en las regiones periféricas, destacando tanto similitudes funcionales como adaptaciones estructurales específicas.
+
+---
+
+### Búsqueda de Homólogos y Construcción de Árboles Filogenéticos
+Se utilizó BLAST para identificar proteínas homólogas en la base de datos NR. Las búsquedas para 1WSO y 1CQ0 identificaron múltiples homólogos, que posteriormente se utilizaron para construir árboles filogenéticos con los métodos Neighbor Joining (NJ) y UPGMA. Los resultados incluyeron:
+
+- **1WSO (Orexina-A):** La proteína más cercana fue la Orexina A y B de Ovis aries, lo que sugiere una fuerte conservación evolutiva.
+- **1CQ0 (Orexina-B):** Su homólogo más cercano fue la cadena L de 7L1U del Homo sapiens, lo que confirma su funcionalidad específica en esta especie.
+
+El análisis de los árboles filogenéticos incluyó métricas como el número de terminales, las distancias entre nodos y los valores de bootstrap, proporcionando una visión detallada de las relaciones evolutivas.
+
+---
+
+### Cálculo de Máximas Distancias entre Átomos
+Se desarrolló una función para calcular la distancia máxima entre átomos en cada estructura. Los resultados indicaron que 1WSO tiene una distancia mayor, reflejando una mayor flexibilidad y tamaño en comparación con 1CQ0. Esto resalta diferencias en su estabilidad estructural y sus interacciones con receptores.
+
+La fórmula utilizada para calcular la distancia entre átomos fue:
+$$
+\\text{Distancia} = \\sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2 + (z_1 - z_2)^2}
+$$
+
+---
+
+### Conclusión
+Este análisis detallado de las proteínas 1WSO y 1CQ0 demuestra cómo herramientas computacionales pueden desentrañar complejidades estructurales y evolutivas. La conservación de las hélices alfa principales subraya su importancia funcional, mientras que las diferencias en regiones flexibles reflejan adaptaciones específicas. Estas proteínas son un ejemplo fascinante de cómo la evolución puede preservar funciones esenciales mientras ajusta estructuras para satisfacer necesidades biológicas específicas.
 
 </div>
