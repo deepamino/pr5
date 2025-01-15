@@ -318,7 +318,7 @@ El átomo central identificado es un **nitrógeno (`N`)** del residuo **prolina 
 
 <br>
 
-### README: Ejercicio 3 - Proteínas del Sueño
+### Ejercicio 3 - Proteínas del Sueño
 
 #### Introducción
 En este ejercicio, se exploran las características estructurales, funcionales y evolutivas de dos proteínas clave implicadas en la regulación del sueño y otros procesos biológicos esenciales: **Orexina-A/Hipocretina-1 (1WSO)** y **Orexina-B/Hipocretina-2 (1CQ0)**. A través del análisis tridimensional, búsquedas de homólogos y la construcción de árboles filogenéticos, se busca entender las similitudes y diferencias entre estas proteínas, sus relaciones evolutivas y su papel en organismos como el ser humano.
@@ -332,58 +332,173 @@ Las proteínas 1WSO y 1CQ0 se cargaron utilizando la librería `Bio.PDB` y se vi
 
 1. **Estructura de 1WSO (Orexina-A):**
    - La proteína muestra una hélice alfa prominente, con una organización compacta y una estructura secundaria bien definida. Esta hélice alfa es crucial para su interacción con los receptores OX1R y OX2R.
+
+<div align="center">
+    <img src="results/1wso_pic1.png" width="80%">
+    <p><b>Figura 9.</b> Representación de la Orexina-A (1WSO)</p>
+</div>
+
    - Se identificaron residuos no estándar, como PCA y NH₂. Estos residuos, aunque pequeños, desempeñan un papel importante en la estabilización de la estructura o en su funcionalidad experimental.
+
+<div align="center">
+    <img src="results/1wso_pic2.png" width="80%">
+    <p><b>Figura 9.</b> Representación de la Orexina-A (1WSO)</p>
+</div>
 
 2. **Estructura de 1CQ0 (Orexina-B):**
    - A diferencia de 1WSO, esta proteína es más compacta y tiene menos flexibilidad en sus extremos terminales, lo que refuerza su interacción específica con el receptor OX2R.
-   - La estructura presenta una única hélice alfa continua, que también es fundamental para sus funciones biológicas.
 
-Además, se identificaron y describieron ligandos presentes en las estructuras, con un análisis detallado de su rol en la funcionalidad y estabilidad de las proteínas.
+<div align="center">
+    <img src="results/1cq0_pic1.png" width="80%">
+    <p><b>Figura 10.</b> Representación de la Orexina-A (1WSO)</p>
+</div>
+
+   - La estructura presenta una única hélice alfa continua, que también es fundamental para sus funciones biológicas.
 
 ---
 
 ### Alineación de Proteínas
-El alineamiento estructural se llevó a cabo utilizando el algoritmo de superposición de Kabsch implementado en la clase `PDB.Superimposer` de Biopython. Este proceso minimiza la suma de las distancias cuadradas entre átomos equivalentes en ambas proteínas, generando tres componentes clave:
+El alineamiento entre las estructuras de **Orexina-A** y **Orexina-B** genera tres componentes principales: la matriz de rotación, el vector de traslación, y el valor de RMSD. Aquí explicamos cada uno en detalle usando notación matemática.
 
-1. **Matriz de Rotación**:
-   $$
-   R = 
-   \\begin{bmatrix}
-   1.00000000 & -1.31074131 \\times 10^{-8} &  9.74082657 \\times 10^{-8} \\\\
-   1.31074154 \\times 10^{-8} & 1.00000000 & -2.44023484 \\times 10^{-8} \\\\
-   -9.74082652 \\times 10^{-8} & 2.44023494 \\times 10^{-8} & 1.00000000
-   \\end{bmatrix}
-   $$
-   Esta matriz muestra que no fue necesario un cambio significativo en la orientación de las proteínas para lograr la alineación, ya que los valores cercanos a 1 en la diagonal indican una conservación espacial notable.
+##### 1. **Matriz de rotación ($ R $)**
 
-2. **Vector de Traslación**:
-   $$
-   T = 
-   \\begin{bmatrix}
-   -1.10392905 \\times 10^{-6} \\\\
-   1.58119236 \\times 10^{-7} \\\\
-   -7.35061366 \\times 10^{-7}
-   \\end{bmatrix}
-   $$
-   Este vector describe el desplazamiento mínimo necesario para alinear las estructuras en un mismo sistema de coordenadas. Los valores muy pequeños indican que las proteínas ya estaban alineadas de manera aproximada antes del ajuste.
+La matriz de rotación $ R $ es:
+$$
+R = 
+\begin{bmatrix}
+1.00000000 & -1.31074131 \times 10^{-8} &  9.74082657 \times 10^{-8} \\
+1.31074154 \times 10^{-8} & 1.00000000 & -2.44023484 \times 10^{-8} \\
+-9.74082652 \times 10^{-8} & 2.44023494 \times 10^{-8} & 1.00000000
+\end{bmatrix}
+$$
+
+Esto indica una rotación mínima. Los valores cercanos a 1 en la diagonal principal muestran que no hay un cambio significativo en la orientación de los ejes $x$, $y$ y $z$. Los valores fuera de la diagonal son muy pequeños ($\sim 10^{-8}$), indicando ligeras correcciones necesarias para la alineación.
+
+En términos generales, si un punto $ P $ en la estructura móvil tiene coordenadas $(x, y, z)$, después de aplicar esta rotación, sus nuevas coordenadas serían:
+$$
+P' = R \cdot P
+$$
+
+##### 2. **Vector de traslación ($ T $)**
+
+El vector de traslación $ T $ es:
+$$
+T = 
+\begin{bmatrix}
+-1.10392905 \times 10^{-6} \\
+1.58119236 \times 10^{-7} \\
+-7.35061366 \times 10^{-7}
+\end{bmatrix}
+$$
+
+Este vector indica un desplazamiento mínimo necesario para alinear las estructuras en el espacio tridimensional. El desplazamiento en los tres ejes ($x$, $y$, $z$) es muy pequeño ($\sim 10^{-6}$), lo que sugiere que las dos estructuras ya estaban bastante alineadas en términos de posición antes de aplicar esta traslación.
+
+La nueva posición de un punto después de aplicar rotación y traslación será:
+$$
+P'' = R \cdot P + T
+$$
+
+##### 3. **RMSD (Root Mean Square Deviation)**
+
+El valor de RMSD ($ \text{RMSD} $) es:
+$$
+\text{RMSD} = 7.47 \, \text{Å}
+$$
+
+La RMSD se calcula usando:
+$$
+\text{RMSD} = \sqrt{\frac{1}{N} \sum_{i=1}^N \left\| P_{1i} - P_{2i} \right\|^2}
+$$
+
+Donde:
+- $N$ es el número de átomos considerados para el alineamiento (átomos alfa-carbono $CA$).
+- $P_{1i}$ y $P_{2i}$ son las posiciones de los átomos correspondientes en las dos estructuras después de la alineación.
+- $\left\| P_{1i} - P_{2i} \right\|$ es la distancia euclidiana entre el $i$-ésimo átomo de las dos estructuras.
+
+El RMSD de **7.47 Å** indica una desviación significativa entre las posiciones de los átomos en las dos estructuras. Esto refleja diferencias estructurales en las regiones flexibles o específicas, como las terminaciones o las secuencias que no son estructuralmente conservadas.
+
+Podemos ahora visualizar las proteínas, una vez aplicadas las transformaciones y rotaciones necesarias para el alineamiento. El resultado es el mostrado en las siguientes gráficas:
+
 
 3. **RMSD (Root Mean Square Deviation)**:
+
    $$
-   \\text{RMSD} = \\sqrt{\\frac{1}{N} \\sum_{i=1}^N \\left\\| P_{1i} - P_{2i} \\right\\|^2} = 7.47 \\, \\text{Å}
+   \text{RMSD} = \sqrt{\frac{1}{N} \sum_{i=1}^N \left| P_{1i} - P_{2i} \right|^2} = 7.47 , \text{Å}
    $$
+
    Este valor refleja diferencias estructurales significativas, particularmente en las regiones terminales y flexibles de las proteínas.
 
 La visualización de las proteínas alineadas mostró una conservación en las hélices alfa principales y diferencias en las regiones periféricas, destacando tanto similitudes funcionales como adaptaciones estructurales específicas.
 
+<div align="center">
+    <img src="results/comp_aligned_pic1.png" width="90%">
+    <p><b>Figura 11.</b> Alineación estructural de las proteínas 1WSO y 1CQ0.</p>
+</div>
+
+<div align="center">
+    <img src="results/comp_aligned_pic2.png" width="90%">
+    <p><b>Figura 11.</b> Alineación estructural de las proteínas 1WSO y 1CQ0.</p>
+</div>
+
+Una vez realizado el alineamiento, podemos concluir que las estructuras de **Orexina-A** y **Orexina-B** comparten un núcleo estructural conservado, como se evidencia en la superposición de las hélices alfa principales. Esto confirma su similitud en las regiones funcionales críticas para la interacción con los receptores de orexina. Sin embargo, el valor de **RMSD (7.47 Å)** indica diferencias significativas en algunas regiones, particularmente en las partes más flexibles o terminales, que no se alinean perfectamente.
+
+El **vector de traslación** y la **matriz de rotación** reflejan que solo se requirieron ajustes mínimos para superponer las estructuras, lo que reafirma que ambas proteínas tienen una base estructural similar. Las discrepancias observadas son consistentes con sus diferencias en la secuencia de aminoácidos y longitud, lo cual podría explicar sus afinidades y roles funcionales diferenciados hacia los receptores OX1R y OX2R. En conclusión, el alineamiento destaca las similitudes fundamentales necesarias para su función compartida como neuropéptidos reguladores, pero también resalta las adaptaciones estructurales específicas que permiten a cada proteína cumplir con sus roles fisiológicos únicos.
+
 ---
 
 ### Búsqueda de Homólogos y Construcción de Árboles Filogenéticos
-Se utilizó BLAST para identificar proteínas homólogas en la base de datos NR. Las búsquedas para 1WSO y 1CQ0 identificaron múltiples homólogos, que posteriormente se utilizaron para construir árboles filogenéticos con los métodos Neighbor Joining (NJ) y UPGMA. Los resultados incluyeron:
 
-- **1WSO (Orexina-A):** La proteína más cercana fue la Orexina A y B de Ovis aries, lo que sugiere una fuerte conservación evolutiva.
-- **1CQ0 (Orexina-B):** Su homólogo más cercano fue la cadena L de 7L1U del Homo sapiens, lo que confirma su funcionalidad específica en esta especie.
+El análisis evolutivo de las proteínas Orexina-A (1WSO) y Orexina-B (1CQ0) se realizó mediante el uso de BLAST (Basic Local Alignment Search Tool) para identificar homólogos en la base de datos NR (Non-Redundant). Este proceso permitió explorar la conservación evolutiva de estas proteínas y sus relaciones con proteínas de otras especies.
 
-El análisis de los árboles filogenéticos incluyó métricas como el número de terminales, las distancias entre nodos y los valores de bootstrap, proporcionando una visión detallada de las relaciones evolutivas.
+#### Búsqueda de Homólogos de Orexina-A (1WSO)
+BLAST se utilizó para analizar la secuencia de la Orexina-A con el fin de identificar proteínas homólogas. Se cargaron las secuencias de las proteínas en formato FASTA y se ejecutaron búsquedas BLASTP contra la base de datos NR.
+
+1. **Carga y Preprocesamiento de Secuencias**  
+   Las secuencias en formato FASTA se procesaron mediante un cargador especializado. Posteriormente, la secuencia de 1WSO se envió a BLASTP, generando un conjunto de alineamientos con otras proteínas en la base de datos NR.
+
+2. **Resultados de BLAST**  
+   Los resultados incluyeron información clave como el organismo de origen, la longitud del alineamiento, el valor E (E-value) y la puntuación (score). Los alineamientos más significativos, aquellos con los valores E más bajos, se analizaron en detalle.  
+   - La proteína más similar fue **1R02**, una Orexina-A del Homo sapiens. Este resultado era esperado debido a que ambas comparten una relación evolutiva directa.  
+   - Entre los organismos no humanos, la proteína más cercana fue una Orexina A y B de **Ovis aries**.
+
+3. **Alineación Atómica y Visualización**  
+   Se descargaron las estructuras PDB de 1WSO y 1R02. Estas proteínas se alinearon atómicamente utilizando el algoritmo de superposición de Kabsch.  
+   - **Matriz de Rotación y Vector de Traslación:** Mostraron cambios mínimos en la orientación y posición de las proteínas.  
+   - **RMSD:** Un valor reducido indicó una alta similitud estructural, especialmente en las hélices alfa principales.  
+   La visualización en `py3Dmol` mostró cómo las estructuras se superponen notablemente en sus regiones centrales, con divergencias en los extremos terminales.
+
+#### Búsqueda de Homólogos de Orexina-B (1CQ0)
+El mismo proceso se repitió para la Orexina-B, con algunos resultados diferentes que reflejan sus características únicas.
+
+1. **Resultados de BLAST**  
+   - El homólogo más cercano fue la cadena L de **7L1U**, una Orexina del Homo sapiens.  
+   - Otras proteínas similares incluyeron aquellas provenientes de mamíferos cercanos, lo que sugiere una fuerte conservación evolutiva en esta clase de organismos.
+
+2. **Alineación y Visualización**  
+   Se alinearon las estructuras de 1CQ0 y 7L1U, enfocándose en la cadena L de esta última.  
+   - La superposición mostró una notable conservación en las hélices alfa principales.  
+   - El resto de la estructura de 7L1U, correspondiente a cadenas adicionales no relacionadas, no mostró alineamiento significativo con 1CQ0.
+
+#### Construcción de Árboles Filogenéticos
+Con los datos de los homólogos obtenidos mediante BLAST, se construyeron árboles filogenéticos utilizando las herramientas de Biopython y Clustal Omega. 
+
+1. **Alineamiento de Secuencias y Métodos de Construcción**  
+   - Se utilizó Clustal Omega para realizar un alineamiento múltiple de las secuencias.
+   - Se construyeron árboles filogenéticos mediante dos métodos: **Neighbor Joining (NJ)** y **UPGMA**.  
+     - **Neighbor Joining:** Un método basado en distancias que agrupa las secuencias de manera jerárquica según sus similitudes.  
+     - **UPGMA:** Método basado en promedios ponderados que produce un árbol ultramétrico.
+
+2. **Análisis de los Árboles Filogenéticos**  
+   - En el caso de 1WSO, la proteína más cercana fue consistentemente la Orexina A y B de **Ovis aries**, lo que sugiere una fuerte conservación evolutiva en mamíferos.  
+   - Para 1CQ0, el análisis confirmó que la cadena L de 7L1U es el homólogo más cercano, validando los resultados obtenidos por BLAST.
+
+3. **Métricas del Árbol**  
+   - **Número de terminales:** Refleja la diversidad de proteínas incluidas en el análisis.  
+   - **Longitudes de las ramas:** Indican distancias evolutivas entre proteínas.  
+   - **Bootstrap:** Una métrica estadística que valida la solidez de las agrupaciones.
+
+#### Conclusiones del Análisis Evolutivo
+El análisis filogenético y estructural destaca cómo la Orexina-A y la Orexina-B han evolucionado para cumplir funciones específicas en diferentes especies. La conservación de las hélices alfa principales subraya la importancia de estas regiones en la interacción con los receptores OX1R y OX2R. Las diferencias en las regiones terminales reflejan adaptaciones funcionales que podrían estar relacionadas con la especificidad de cada proteína hacia diferentes receptores o contextos fisiológicos. Este análisis no solo proporciona una visión detallada de las relaciones evolutivas, sino que también resalta la utilidad de herramientas computacionales en el estudio de la biología molecular.
 
 ---
 
