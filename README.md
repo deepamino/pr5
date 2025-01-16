@@ -360,9 +360,10 @@ Las proteínas 1WSO y 1CQ0 se cargaron utilizando la librería `Bio.PDB` y se vi
 ### Alineación de Proteínas
 El alineamiento entre las estructuras de **Orexina-A** y **Orexina-B** genera tres componentes principales: la matriz de rotación, el vector de traslación, y el valor de RMSD. Aquí explicamos cada uno en detalle usando notación matemática.
 
-##### 1. **Matriz de rotación ($ R $)**
+##### 1. **Matriz de rotación ( $ R $ )**
 
 La matriz de rotación $ R $ es:
+
 $$
 R = 
 \begin{bmatrix}
@@ -375,6 +376,7 @@ $$
 Esto indica una rotación mínima. Los valores cercanos a 1 en la diagonal principal muestran que no hay un cambio significativo en la orientación de los ejes $x$, $y$ y $z$. Los valores fuera de la diagonal son muy pequeños ($\sim 10^{-8}$), indicando ligeras correcciones necesarias para la alineación.
 
 En términos generales, si un punto $ P $ en la estructura móvil tiene coordenadas $(x, y, z)$, después de aplicar esta rotación, sus nuevas coordenadas serían:
+
 $$
 P' = R \cdot P
 $$
@@ -382,6 +384,7 @@ $$
 ##### 2. **Vector de traslación ($ T $)**
 
 El vector de traslación $ T $ es:
+
 $$
 T = 
 \begin{bmatrix}
@@ -394,6 +397,7 @@ $$
 Este vector indica un desplazamiento mínimo necesario para alinear las estructuras en el espacio tridimensional. El desplazamiento en los tres ejes ($x$, $y$, $z$) es muy pequeño ($\sim 10^{-6}$), lo que sugiere que las dos estructuras ya estaban bastante alineadas en términos de posición antes de aplicar esta traslación.
 
 La nueva posición de un punto después de aplicar rotación y traslación será:
+
 $$
 P'' = R \cdot P + T
 $$
@@ -406,6 +410,7 @@ $$
 $$
 
 La RMSD se calcula usando:
+
 $$
 \text{RMSD} = \sqrt{\frac{1}{N} \sum_{i=1}^N \left\| P_{1i} - P_{2i} \right\|^2}
 $$
@@ -422,9 +427,9 @@ Podemos ahora visualizar las proteínas, una vez aplicadas las transformaciones 
 
 3. **RMSD (Root Mean Square Deviation)**:
 
-   $$
-   \text{RMSD} = \sqrt{\frac{1}{N} \sum_{i=1}^N \left| P_{1i} - P_{2i} \right|^2} = 7.47 , \text{Å}
-   $$
+$$
+\text{RMSD} = \sqrt{\frac{1}{N} \sum_{i=1}^N \left| P_{1i} - P_{2i} \right|^2} = 7.47 , \text{Å}
+$$
 
    Este valor refleja diferencias estructurales significativas, particularmente en las regiones terminales y flexibles de las proteínas.
 
