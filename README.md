@@ -360,9 +360,9 @@ Las proteínas 1WSO y 1CQ0 se cargaron utilizando la librería `Bio.PDB` y se vi
 ### Alineación de Proteínas
 El alineamiento entre las estructuras de **Orexina-A** y **Orexina-B** genera tres componentes principales: la matriz de rotación, el vector de traslación, y el valor de RMSD. Aquí explicamos cada uno en detalle usando notación matemática.
 
-##### 1. **Matriz de rotación ( $ R $ )**
+##### 1. **Matriz de rotación ($R$)**
 
-La matriz de rotación $ R $ es:
+La matriz de rotación $R$ es:
 
 $$
 R = 
