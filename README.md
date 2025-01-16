@@ -375,15 +375,15 @@ $$
 
 Esto indica una rotación mínima. Los valores cercanos a 1 en la diagonal principal muestran que no hay un cambio significativo en la orientación de los ejes $x$, $y$ y $z$. Los valores fuera de la diagonal son muy pequeños ($\sim 10^{-8}$), indicando ligeras correcciones necesarias para la alineación.
 
-En términos generales, si un punto $ P $ en la estructura móvil tiene coordenadas $(x, y, z)$, después de aplicar esta rotación, sus nuevas coordenadas serían:
+En términos generales, si un punto $P$ en la estructura móvil tiene coordenadas $(x, y, z)$, después de aplicar esta rotación, sus nuevas coordenadas serían:
 
 $$
 P' = R \cdot P
 $$
 
-##### 2. **Vector de traslación ($ T $)**
+##### 2. **Vector de traslación ($T$)**
 
-El vector de traslación $ T $ es:
+El vector de traslación $T$ es:
 
 $$
 T = 
@@ -404,7 +404,7 @@ $$
 
 ##### 3. **RMSD (Root Mean Square Deviation)**
 
-El valor de RMSD ($ \text{RMSD} $) es:
+El valor de RMSD ($\text{RMSD}$) es:
 $$
 \text{RMSD} = 7.47 \, \text{Å}
 $$
