@@ -682,12 +682,28 @@ La proteína del archivo './data/1WSO.pdb' tiene la mayor distancia entre átomo
 La proteína del archivo './data/1CQ0.pdb' tiene una distancia máxima entre átomos de 34.73 Å
 ```
 
-Esta diferencia entre ambas proteínas era algo que no se apreciaba de una forma tan clara en la representación de ambas proteínas en un mismo espacio, lo que demuestra el poder de Biopython en el estudio de estructuras.
+Esta diferencia entre ambas proteínas era algo que no se apreciaba de una forma tan clara en la representación de ambas proteínas en un mismo espacio, como se puede apreciar en la Figura 19.
 
 <div align="center">
     <img src="results/comp_pic1.png" width="90%">
     <p><b>Figura 19.</b> Comparación de las distancias máximas entre átomos de las proteínas 1WSO y 1CQ0.</p>
 </div>
+
+Ahora bien, ¿Por qué la proteína de la Orexina-A tiene una mayor distancia máxima entre átomos que la Orexina-B? La respuesta a esta pregunta radica en las diferencias estructurales y funcionales entre las proteínas. La Orexina-A sabemos que posee una serie de ligandos y residuos no estándar que pueden influir en la disposición de los átomos y, por ende, en la distancia máxima entre ellos.
+
+<div align="center">
+    <img src="results/dist_1wso.png" width="90%">
+    <p><b>Figura 20.</b> Distancia máxima entre átomos de la proteína 1WSO.</p>
+</div>
+
+<div align="center">
+    <img src="results/dist_1cq0.png" width="90%">
+    <p><b>Figura 21.</b> Distancia máxima entre átomos de la proteína 1CQ0.</p>
+</div>
+
+Concluimos, por tanto, que la proteína de la Orexina-A/Hipocretina-1 (1WSO) tiene una mayor distancia entre sus átomos que la Orexina-B/Hipocretina-2 (1CQ0), lo cual es consistente con las diferencias estructurales y funcionales observadas entre ambas proteínas. La presencia de ligandos adicionales en la Orexina-A podría contribuir a esta mayor distancia, lo que destaca la importancia de considerar la estructura completa de las proteínas al evaluar sus propiedades físicas y biológicas. Además, la comparación de las distancias entre átomos puede proporcionar información adicional sobre la estabilidad, la interacción con otras moléculas y la función de las proteínas, lo que es crucial para comprender su papel en los procesos biológicos y su relevancia en la salud y la enfermedad.
+
+Esta mayor distancia también sugiere que la Orexina-A podría tener mayor flexibilidad estructural, lo que influiría en su capacidad para interactuar con diferentes receptores o adaptarse a diversos entornos moleculares. Esto podría explicar, en parte, su versatilidad funcional y su implicación en múltiples procesos fisiológicos. Por otro lado, las diferencias en compactación podrían tener implicaciones en la eficiencia del plegamiento y en la estabilidad de la proteína, aspectos clave en el diseño de fármacos que buscan modular la actividad de estas moléculas en el tratamiento de trastornos relacionados con el sistema orexinérgico.
 
 ---
 
