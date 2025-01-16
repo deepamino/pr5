@@ -318,7 +318,7 @@ El átomo central identificado es un **nitrógeno (`N`)** del residuo **prolina 
 
 <br>
 
-### Ejercicio 3 - Proteínas del Sueño
+## **Ejercicio 3: Orexina-A y Orexina-B, neuropéptidos reguladores del sueño**
 
 #### Introducción
 En este ejercicio, se exploran las características estructurales, funcionales y evolutivas de dos proteínas clave implicadas en la regulación del sueño y otros procesos biológicos esenciales: **Orexina-A/Hipocretina-1 (1WSO)** y **Orexina-B/Hipocretina-2 (1CQ0)**. A través del análisis tridimensional, búsquedas de homólogos y la construcción de árboles filogenéticos, se busca entender las similitudes y diferencias entre estas proteínas, sus relaciones evolutivas y su papel en organismos como el ser humano.
@@ -342,7 +342,7 @@ Las proteínas 1WSO y 1CQ0 se cargaron utilizando la librería `Bio.PDB` y se vi
 
 <div align="center">
     <img src="results/1wso_pic2.png" width="80%">
-    <p><b>Figura 9.</b> Representación de la Orexina-A (1WSO)</p>
+    <p><b>Figura 10.</b> Representación de la Orexina-A (1WSO)</p>
 </div>
 
 2. **Estructura de 1CQ0 (Orexina-B):**
@@ -350,7 +350,7 @@ Las proteínas 1WSO y 1CQ0 se cargaron utilizando la librería `Bio.PDB` y se vi
 
 <div align="center">
     <img src="results/1cq0_pic1.png" width="80%">
-    <p><b>Figura 10.</b> Representación de la Orexina-A (1WSO)</p>
+    <p><b>Figura 11.</b> Representación de la Orexina-A (1WSO)</p>
 </div>
 
    - La estructura presenta una única hélice alfa continua, que también es fundamental para sus funciones biológicas.
@@ -432,12 +432,12 @@ La visualización de las proteínas alineadas mostró una conservación en las h
 
 <div align="center">
     <img src="results/comp_aligned_pic1.png" width="90%">
-    <p><b>Figura 11.</b> Alineación estructural de las proteínas 1WSO y 1CQ0.</p>
+    <p><b>Figura 12.</b> Alineación estructural de las proteínas 1WSO y 1CQ0.</p>
 </div>
 
 <div align="center">
     <img src="results/comp_aligned_pic2.png" width="90%">
-    <p><b>Figura 11.</b> Alineación estructural de las proteínas 1WSO y 1CQ0.</p>
+    <p><b>Figura 13.</b> Alineación estructural de las proteínas 1WSO y 1CQ0.</p>
 </div>
 
 Una vez realizado el alineamiento, podemos concluir que las estructuras de **Orexina-A** y **Orexina-B** comparten un núcleo estructural conservado, como se evidencia en la superposición de las hélices alfa principales. Esto confirma su similitud en las regiones funcionales críticas para la interacción con los receptores de orexina. Sin embargo, el valor de **RMSD (7.47 Å)** indica diferencias significativas en algunas regiones, particularmente en las partes más flexibles o terminales, que no se alinean perfectamente.
@@ -446,69 +446,248 @@ El **vector de traslación** y la **matriz de rotación** reflejan que solo se r
 
 ---
 
-### Búsqueda de Homólogos y Construcción de Árboles Filogenéticos
+### Búsqueda de Homólogos usando BLAST
 
-El análisis evolutivo de las proteínas Orexina-A (1WSO) y Orexina-B (1CQ0) se realizó mediante el uso de BLAST (Basic Local Alignment Search Tool) para identificar homólogos en la base de datos NR (Non-Redundant). Este proceso permitió explorar la conservación evolutiva de estas proteínas y sus relaciones con proteínas de otras especies.
+#### **Orexina-A/Hipocretina-1 (1WSO)**
 
-#### Búsqueda de Homólogos de Orexina-A (1WSO)
-BLAST se utilizó para analizar la secuencia de la Orexina-A con el fin de identificar proteínas homólogas. Se cargaron las secuencias de las proteínas en formato FASTA y se ejecutaron búsquedas BLASTP contra la base de datos NR.
+La identificación de secuencias homólogas para la Orexina-A (1WSO) se realizó utilizando la herramienta **BLASTP**. Este enfoque permite encontrar proteínas con similitudes significativas en la base de datos no redundante (**NR**) y analizar sus relaciones evolutivas. A continuación, se detalla el procedimiento llevado a cabo:
 
-1. **Carga y Preprocesamiento de Secuencias**  
-   Las secuencias en formato FASTA se procesaron mediante un cargador especializado. Posteriormente, la secuencia de 1WSO se envió a BLASTP, generando un conjunto de alineamientos con otras proteínas en la base de datos NR.
+1. **Carga de Secuencias**
+   Las secuencias de las proteínas se obtuvieron desde archivos en formato FASTA. Estas se cargaron mediante herramientas especializadas para garantizar una correcta estructuración de los datos.
 
-2. **Resultados de BLAST**  
-   Los resultados incluyeron información clave como el organismo de origen, la longitud del alineamiento, el valor E (E-value) y la puntuación (score). Los alineamientos más significativos, aquellos con los valores E más bajos, se analizaron en detalle.  
-   - La proteína más similar fue **1R02**, una Orexina-A del Homo sapiens. Este resultado era esperado debido a que ambas comparten una relación evolutiva directa.  
-   - Entre los organismos no humanos, la proteína más cercana fue una Orexina A y B de **Ovis aries**.
+   ```python
+   loader = DataLoaderFactory.get_loader("fasta")
+   sequence_1wso = loader.load(data_path + "/rcsb_pdb_1WSO.fasta")
+   print("Secuencia 1WSO:", sequence_1wso)
+   ```
 
-3. **Alineación Atómica y Visualización**  
-   Se descargaron las estructuras PDB de 1WSO y 1R02. Estas proteínas se alinearon atómicamente utilizando el algoritmo de superposición de Kabsch.  
-   - **Matriz de Rotación y Vector de Traslación:** Mostraron cambios mínimos en la orientación y posición de las proteínas.  
-   - **RMSD:** Un valor reducido indicó una alta similitud estructural, especialmente en las hélices alfa principales.  
-   La visualización en `py3Dmol` mostró cómo las estructuras se superponen notablemente en sus regiones centrales, con divergencias en los extremos terminales.
+2. **Realización de Búsqueda BLAST**
+   Se ejecutó la función `search_online_sequences` para buscar homólogos en la base de datos NR. Esta función automatiza el proceso de búsqueda y extracción de información clave, como el organismo de origen, la longitud del alineamiento, el valor **E** y la puntuación (**score**).
 
-#### Búsqueda de Homólogos de Orexina-B (1CQ0)
-El mismo proceso se repitió para la Orexina-B, con algunos resultados diferentes que reflejan sus características únicas.
+   ```python
+   def search_online_sequences(sequence):
+       result = NCBIWWW.qblast("blastp", "nr", sequence)
+       blast_records = NCBIXML.read(result)
 
-1. **Resultados de BLAST**  
-   - El homólogo más cercano fue la cadena L de **7L1U**, una Orexina del Homo sapiens.  
-   - Otras proteínas similares incluyeron aquellas provenientes de mamíferos cercanos, lo que sugiere una fuerte conservación evolutiva en esta clase de organismos.
+       data = []
+       if not blast_records.alignments:
+           print("No se encontraron resultados.")
+           return pd.DataFrame()
+       
+       for alignment in blast_records.alignments:
+           organism = alignment.title
+           sequence_data = alignment.hsps[0].align_length
+           e_value = alignment.hsps[0].expect
+           score = alignment.hsps[0].score
+           
+           data.append({
+               "Organismo": organism,
+               "Secuencia": sequence_data,
+               "E-value": e_value,
+               "Score": score
+           })
+       
+       return pd.DataFrame(data)
 
-2. **Alineación y Visualización**  
-   Se alinearon las estructuras de 1CQ0 y 7L1U, enfocándose en la cadena L de esta última.  
-   - La superposición mostró una notable conservación en las hélices alfa principales.  
-   - El resto de la estructura de 7L1U, correspondiente a cadenas adicionales no relacionadas, no mostró alineamiento significativo con 1CQ0.
+   df_homolog_1wso = search_online_sequences(sequence_1wso)
+   ```
 
-#### Construcción de Árboles Filogenéticos
-Con los datos de los homólogos obtenidos mediante BLAST, se construyeron árboles filogenéticos utilizando las herramientas de Biopython y Clustal Omega. 
+3. **Análisis y Filtrado de Resultados**
+   Los resultados se ordenaron según el valor **E**, priorizando las alineaciones más significativas. Además, se filtraron los resultados para identificar los homólogos más cercanos en términos evolutivos, centrándonos especialmente en aquellos relacionados con *Homo sapiens*.
 
-1. **Alineamiento de Secuencias y Métodos de Construcción**  
-   - Se utilizó Clustal Omega para realizar un alineamiento múltiple de las secuencias.
-   - Se construyeron árboles filogenéticos mediante dos métodos: **Neighbor Joining (NJ)** y **UPGMA**.  
-     - **Neighbor Joining:** Un método basado en distancias que agrupa las secuencias de manera jerárquica según sus similitudes.  
-     - **UPGMA:** Método basado en promedios ponderados que produce un árbol ultramétrico.
+   ```python
+   df_homolog_1wso = df_homolog_1wso.sort_values(by="E-value", ascending=True)
+   filtered_homologs_1wso = df_homolog_1wso[df_homolog_1wso["Organismo"].str.contains("Homo sapiens", na=False)]
+   ```
 
-2. **Análisis de los Árboles Filogenéticos**  
-   - En el caso de 1WSO, la proteína más cercana fue consistentemente la Orexina A y B de **Ovis aries**, lo que sugiere una fuerte conservación evolutiva en mamíferos.  
-   - Para 1CQ0, el análisis confirmó que la cadena L de 7L1U es el homólogo más cercano, validando los resultados obtenidos por BLAST.
+   Como resultado, se identificó que la cadena **A** de la proteína **1R02** (Orexina-A humana) es el homólogo más similar a la **1WSO**. Esto es esperable, ya que ambas pertenecen al mismo organismo (*Homo sapiens*).
 
-3. **Métricas del Árbol**  
-   - **Número de terminales:** Refleja la diversidad de proteínas incluidas en el análisis.  
-   - **Longitudes de las ramas:** Indican distancias evolutivas entre proteínas.  
-   - **Bootstrap:** Una métrica estadística que valida la solidez de las agrupaciones.
+4. **Obtención de Estructuras PDB**
+   Se descargaron las estructuras de **1WSO** y **1R02** para realizar un análisis más detallado. Este paso incluyó un alineamiento atómico de ambas proteínas, utilizando la librería **Biopython**, para comparar sus estructuras tridimensionales.
+
+   ```python
+   parser = PDB.PDBParser()
+   structure_1wso = parser.get_structure("1WSO", data_path + "/1wso.pdb")
+   structure_1r02 = parser.get_structure("1R02", data_path + "/1r02.pdb")
+   atomic_aligner = Superimposer()
+   atomic_aligner.align(structure_1wso, structure_1r02, chain1_id="A", chain2_id="A")
+   ```
+
+5. **Visualización y Comparación de Estructuras**
+   Se visualizaron las estructuras alineadas para evaluar su conservación estructural. Este análisis reveló una notable superposición en las regiones centrales de ambas proteínas, especialmente en las hélices alfa principales.
+
+<div align="center">
+    <img src="results/comp_1r02_pic2.png" width="90%">
+    <p><b>Figura 14.</b> Alineación estructural de 1WSO (Azul) y 1R02 (Rojo).</p>
+</div>
+
+#### **Orexina-B/Hipocretina-2 (1CQ0)**
+
+Se utilizó un procedimiento similar al descrito para la Orexina-A, centrado en identificar los homólogos de la **Orexina-B (1CQ0)**. Entre los resultados destacados, se identificó que la cadena **L** de la proteína **7L1U** es un homólogo significativo.
+
+<div align="center">
+    <img src="results/comp_7l1u_pic1.png" width="90%">
+    <img src="results/comp_7l1u_pic2.png" width="90%">
+    <p><b>Figura 15.</b> Comparación de 1CQ0 (Azul) y 7L1U_L (Rojo).</p>
+</div> 
+
+La conservación estructural en regiones críticas sugiere funciones biológicas compartidas, mientras que las diferencias reflejan posibles adaptaciones funcionales específicas.
+
+### Construcción de Árboles Filogenéticos
+
+#### Preparación de datos
+Primero, generamos los ficheros en formato FASTA necesarios, accediendo para ello a NCBI y seleccionando todas las proteínas relevantes. Estas se exportaron en formato FASTA para ser utilizadas en la construcción de los árboles filogenéticos.
+
+#### Alineamiento de secuencias
+Con los ficheros FASTA listos, se utilizó **CLUSTAL Omega**, una herramienta de alineamiento múltiple de secuencias que permite comparar y alinear secuencias de proteínas o ADN. Este alineamiento es crucial para identificar regiones conservadas y generar la base del análisis filogenético.
+
+```python
+fasta_file = "sequences/combined_orexin_a.fasta"
+aligned_file = "sequences/combined_orexin_a_aligned.fasta"
+clustalomega_cline = ClustalOmegaCommandline(
+    infile=fasta_file, 
+    outfile=aligned_file, 
+    verbose=True, 
+    auto=True, 
+    force=True
+)
+clustalomega_cline()
+```
+
+#### Árbol filogenético con el método Neighbor Joining
+Se construyó un árbol filogenético utilizando el método **Neighbor Joining** (NJ). Este método, basado en la distancia entre secuencias, genera un árbol jerárquico que refleja la relación evolutiva entre las secuencias.
+
+```python
+alignment = AlignIO.read(aligned_file, "fasta")
+calculator = DistanceCalculator("identity")
+distance_matrix = calculator.get_distance(alignment)
+constructor = DistanceTreeConstructor(calculator, method="nj")
+tree = constructor.build_tree(alignment)
+```
+
+<div align="center">
+    <img src="results/tree1.png" width="90%">
+    <p><b>Figura 16.</b> Árbol filogenético para Orexina-A utilizando el método Neighbor Joining.</p>
+</div>
+
+#### Análisis del árbol
+El análisis del árbol permitió identificar las relaciones evolutivas más cercanas entre las proteínas:
+
+- La proteína más cercana a **1WSO** fue la Orexina A y B precursora de la especie *Ovis aries*.
+- Este resultado sugiere que las estructuras y funciones de estas proteínas están altamente conservadas en mamíferos.
+
+#### Árbol filogenético con el método UPGMA
+Se generó un nuevo árbol utilizando el método **UPGMA** (Unweighted Pair Group Method with Arithmetic Mean). Este método, también basado en la distancia, agrupa secuencias de manera jerárquica considerando la media aritmética de las distancias.
+
+```python
+constructor = DistanceTreeConstructor(calculator, method="upgma")
+tree = constructor.build_tree(alignment)
+```
+
+<div align="center">
+    <img src="results/tree2.png" width="90%">
+    <p><b>Figura 17.</b> Árbol filogenético para Orexina-A utilizando el método UPGMA.</p>
+</div>
+
+Los resultados obtenidos con UPGMA fueron consistentes con los de Neighbor Joining, confirmando que *Ovis aries* tiene la relación evolutiva más cercana a **1WSO**.
+
+#### Análisis de Orexina-B (1CQ0)
+Se siguió el mismo procedimiento para la proteína **Orexina-B (1CQ0)**:
+
+1. Alineamiento de secuencias:
+   ```python
+   fasta_file = "sequences/combined_orexin_b.fasta"
+   aligned_file = "sequences/combined_orexin_b_aligned.fasta"
+   clustalomega_cline = ClustalOmegaCommandline(
+       infile=fasta_file, 
+       outfile=aligned_file, 
+       verbose=True, 
+       auto=True, 
+       force=True
+   )
+   clustalomega_cline()
+   ```
+
+2. Construcción del árbol con Neighbor Joining:
+   ```python
+   alignment = AlignIO.read(aligned_file, "fasta")
+   tree = constructor.build_tree(alignment)
+   ```
+
+<div align="center">
+    <img src="results/tree3.png" width="90%">
+    <p><b>Figura 18.</b> Árbol filogenético para Orexina-B utilizando el método Neighbor Joining.</p>
+</div>
+
+En este caso, se observó que el homólogo más cercano a **1CQ0** fue la cadena L de la Orexina del *Homo sapiens* (7L1U), en línea con lo esperado.
+
+---
 
 #### Conclusiones del Análisis Evolutivo
 El análisis filogenético y estructural destaca cómo la Orexina-A y la Orexina-B han evolucionado para cumplir funciones específicas en diferentes especies. La conservación de las hélices alfa principales subraya la importancia de estas regiones en la interacción con los receptores OX1R y OX2R. Las diferencias en las regiones terminales reflejan adaptaciones funcionales que podrían estar relacionadas con la especificidad de cada proteína hacia diferentes receptores o contextos fisiológicos. Este análisis no solo proporciona una visión detallada de las relaciones evolutivas, sino que también resalta la utilidad de herramientas computacionales en el estudio de la biología molecular.
 
 ---
 
-### Cálculo de Máximas Distancias entre Átomos
-Se desarrolló una función para calcular la distancia máxima entre átomos en cada estructura. Los resultados indicaron que 1WSO tiene una distancia mayor, reflejando una mayor flexibilidad y tamaño en comparación con 1CQ0. Esto resalta diferencias en su estabilidad estructural y sus interacciones con receptores.
+### Máximas distancias entre átomos
+Por último, hemos desarrollado una función, `max_distance_between_atoms`, que nos permite calcular la máxima distancia entre los átomos de una estructura concreta. Para ello, tenemos en cuenta que la librería `Bio.PDB` de Biopython nos permite acceder a las coordenadas de los átomos de una proteína, y que la distancia entre dos puntos en un espacio tridimensional se puede calcular mediante la fórmula de la distancia euclidiana.
 
-La fórmula utilizada para calcular la distancia entre átomos fue:
+(*) Algo importante a tener en cuenta es que la libería `Bio` permite calcular la distancia euclidea entre dos átomos, `atom1`y `atom2`, mediante la función `atom1 - atom2`. Esto es, la diferencia entre las coordenadas de los dos átomos es equivalente a la distancia euclidea entre ellos, dada por
+
 $$
-\\text{Distancia} = \\sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2 + (z_1 - z_2)^2}
+\sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2 + (z_1 - z_2)^2}
 $$
+
+siendo $(x_1, y_1, z_1)$ y $(x_2, y_2, z_2)$ las coordenadas en un espacio tridimensional de los átomos `atom1` y `atom2`, respectivamente.
+
+```python
+def max_distance_between_atoms(structure):
+    atoms = list(structure.get_atoms())
+    max_distance = 0
+    for i, atom1 in enumerate(atoms):
+        for atom2 in atoms[i+1:]:
+            distance = atom1 - atom2
+            if distance > max_distance:
+                max_distance = distance
+    return max_distance
+```
+
+Calcularemos la máxima distancia entre átomos para las dos estructuras de proteínas que estamos estudiando, Orexina-A/Hipocretina-1 y Orexina-B/Hipocretina-2. El resultado obtenido es el siguiente:
+
+```python
+def compare_proteins_max_distance(pdb_file1, pdb_file2):
+    parser = PDB.PDBParser(QUIET=True)
+
+    structure1 = parser.get_structure("Protein1", pdb_file1)
+    structure2 = parser.get_structure("Protein2", pdb_file2)
+
+    max_distance1 = max_distance_between_atoms(structure1)
+    max_distance2 = max_distance_between_atoms(structure2)
+
+    if max_distance1 > max_distance2:
+        return f"La proteína del archivo '{pdb_file1}' tiene la mayor distancia entre átomos: {max_distance1:.2f} Å\nLa proteína del archivo '{pdb_file2}' tiene una distancia máxima entre átomos de {max_distance2:.2f} Å"
+    elif max_distance2 > max_distance1:
+        return f"La proteína del archivo '{pdb_file2}' tiene la mayor distancia entre átomos: {max_distance2:.2f} Å\nLa proteína del archivo '{pdb_file1}' tiene una distancia máxima entre átomos de {max_distance1:.2f} Å"
+    else:
+        return f"Ambas proteínas tienen la misma distancia máxima entre átomos: {max_distance1:.2f} Å"
+
+pdb_file1 = data_path + "/1WSO.pdb"
+pdb_file2 = data_path + "/1CQ0.pdb"
+
+result = compare_proteins_max_distance(pdb_file1, pdb_file2)
+print(result)
+```
+
+```text
+La proteína del archivo './data/1WSO.pdb' tiene la mayor distancia entre átomos: 44.66 Å
+La proteína del archivo './data/1CQ0.pdb' tiene una distancia máxima entre átomos de 34.73 Å
+```
+
+Esta diferencia entre ambas proteínas era algo que no se apreciaba de una forma tan clara en la representación de ambas proteínas en un mismo espacio, lo que demuestra el poder de Biopython en el estudio de estructuras.
+
+<div align="center">
+    <img src="results/comp_pic1.png" width="90%">
+    <p><b>Figura 19.</b> Comparación de las distancias máximas entre átomos de las proteínas 1WSO y 1CQ0.</p>
+</div>
 
 ---
 
